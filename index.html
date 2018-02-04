@@ -13,6 +13,9 @@
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <!-- Custom fonts for this template -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -27,20 +30,43 @@
 		nav div img{
 		  width: 18%;
 		}
+
 		nav div a{
 			color: #632A40;
 		}
+
+        label{
+            float: left;
+        }
+
 		#section-principal{
 			height: 100vh;
 			background-color: #632A40!important; 
 		}
+
+        .artigos{
+            padding: 10%;
+        }
+
 		#mainNav {
 		    padding-top: 0.5rem;
 		    padding-bottom: 0.5rem;
 		}
+
 		.bg-secondary {
 		    background-color: white!important;
 		}
+
+        #radioBtn .notActive{
+            color: #3276b1;
+            background-color: #fff;
+        }
+
+       .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #F04D4D;
+            border-color: #F04D4D;
+        }
     </style>
 
   </head>
@@ -60,10 +86,63 @@
       <div class="container">
         <div class="row">
 		    <div class="col">
-		      1 of 2
+                <article class="artigos">
+                    <form id="calcFesta" method="post" action="">
+                        <div class="form-group">
+                            <label for="qtdAdulto" >Adultos: </label>
+                            <input id="qtdAdulto" class="form-control" type="number" name="qtdAdulto" min="1"></br>
+                        </div>
+                        <div class="form-group">
+                            <label for="qtdCrianca">Crianças: </label>
+                            <input id="qtdCrianca" class="form-control" type="number" name="qtdCrianca" min="1">
+                        </div>
+                        <div class="form-group" style="padding-top: 4vh;">
+                            <label for="bebida" class="control-label text-left">Vai ter bebida?</label>
+                            <div class="input-group">
+                                <div id="radioBtn" class="btn-group">
+                                    <a class="btn btn-primary btn-sm active" data-toggle="bebida" data-title="Y">SIM</a>
+                                    <a class="btn btn-primary btn-sm notActive" data-toggle="bebida" data-title="N">NÃO</a>
+                                </div>
+                                <input type="hidden" name="bebida" id="bebida">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Calcular</button>
+                    </form>
+                </article>
 		    </div>
 		    <div class="col">
-		      2 of 2
+                <article class="artigos">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Salgados</th>
+                                <th>Doces</th>
+                                <th>Kg de Carne</th>
+                                <th>Litros de Refrigerante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John</td>
+                                <td>Doe</td>
+                                <td>john@example.com</td>
+                                <td>john@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Mary</td>
+                                <td>Moe</td>
+                                <td>mary@example.com</td>
+                                <td>john@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>July</td>
+                                <td>Dooley</td>
+                                <td>july@example.com</td>
+                                <td>john@example.com</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>		     
 		    </div>
 		 </div>
       </div>
@@ -74,7 +153,9 @@
     	dados pessoais
     </footer>
 
-    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>    
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
