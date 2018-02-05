@@ -18,6 +18,26 @@ $(document).ready(function () {
     });
 });
 
+// Excluir Dados
+function Excluir(aux) {
+	$.ajax({
+	 	type: 'post',
+	  	url: 'php/Excluir.php',
+	  	data: {
+	        id: aux
+	  	},
+	  	dataType: 'json',
+	    success :  function(response){
+	        alert("Dados enviado!");
+	        location.reload();
+	    },
+		error: function(xhr, status, error) {
+	    	alert(xhr.responseText);
+	    	location.reload();
+		}
+	});
+}
+
 // Botão de bebidas
 $('#radioBtn a').on('click', function(){
     var sel = $(this).data('title');

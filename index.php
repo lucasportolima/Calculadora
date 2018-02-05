@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
   <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Desafio Unyleya">
+    <meta name="author" content="Lucas Porto">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Desafio Unyleya</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,8 @@
 		}
 
         .artigos{
-            padding: 10%;
+            padding-top: 5vh;
+
         }
 
 		#mainNav {
@@ -90,23 +91,23 @@
                     <form id="calcFesta" method="post" action="">
                         <div class="form-group">
                             <label for="qtdAdulto" >Adultos: </label>
-                            <input id="qtdAdulto" class="form-control" type="number" name="qtdAdulto" min="1"></br>
+                            <input id="qtdAdulto" placeholder="Nº de adultos" class="form-control" type="number" name="qtdAdulto" min="1"></br>
                         </div>
                         <div class="form-group">
                             <label for="qtdCrianca">Crianças: </label>
-                            <input id="qtdCrianca" class="form-control" type="number" name="qtdCrianca" min="1">
+                            <input id="qtdCrianca" placeholder="Nº de criança" class="form-control" type="number" name="qtdCrianca" min="1">
                         </div>
                         <div class="form-group" style="padding-top: 4vh;">
                             <label for="bebida" class="control-label text-left">Vai ter bebida?</label>
                             <div class="input-group">
                                 <div id="radioBtn" class="btn-group">
-                                    <a class="btn btn-primary btn-sm active" data-toggle="bebida" data-title="Y">SIM</a>
-                                    <a class="btn btn-primary btn-sm notActive" data-toggle="bebida" data-title="N">NÃO</a>
+                                    <a class="btn btn-primary btn-sm active" data-toggle="bebida" data-title="SIM">SIM</a>
+                                    <a class="btn btn-primary btn-sm notActive" data-toggle="bebida" data-title="NAO">NÃO</a>
                                 </div>
                                 <input type="hidden" name="bebida" id="bebida">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Calcular</button>
+                        <button type="submit" class="btn btn-primary" onclick="location.reload();">Calcular</button>
                     </form>
                 </article>
 		    </div>
@@ -119,27 +120,53 @@
                                 <th>Doces</th>
                                 <th>Kg de Carne</th>
                                 <th>Litros de Refrigerante</th>
+                                <th>Bebidas</th>
+                                <th>Latas de Cerveja</th>
+                                <th>Litros de Whisky</th>
+                                <th>-</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                            </tr>
-                            <tr>
-                                <td>Mary</td>
-                                <td>Moe</td>
-                                <td>mary@example.com</td>
-                                <td>john@example.com</td>
-                            </tr>
-                            <tr>
-                                <td>July</td>
-                                <td>Dooley</td>
-                                <td>july@example.com</td>
-                                <td>john@example.com</td>
-                            </tr>
+                            <?php
+                                $arquivo = file_get_contents('data.json');
+                                $json = json_decode($arquivo);
+
+                                if(count($json) > 0){
+                                    foreach ($json as $dado) {
+                                        $qtdSalgados = intval($dado->qtdAdulto/10) * 100;
+                                        $qtdSalgados = $qtdSalgados + intval($dado->qtdCrianca/2) * 10;
+                                        $qtdDoces = intval($dado->qtdCrianca/4) * 5;
+                                        $qtdCarne = intval(($dado->qtdAdulto + $dado->qtdCrianca)/6);
+                                        $qtdRefrigerante = intval(($dado->qtdAdulto + $dado->qtdCrianca)/4) * 2;
+
+                                        $qtdCerveja = 0;
+                                        $qtdWhisky = 0;
+
+                                        if($dado->bebida == "SIM"){
+                                            $qtdCerveja = intval($dado->qtdAdulto/3) * 12;
+                                            $qtdWhisky = intval($dado->qtdAdulto/30);
+                                            $qtdCerveja = $qtdCerveja - $dado->qtdCrianca * 2;
+                                        }
+                                        echo "
+                                            <tr>
+                                                <td>$qtdSalgados</td>
+                                                <td>$qtdDoces</td>
+                                                <td>$qtdCarne</td>
+                                                <td>$qtdRefrigerante</td>
+                                                <td>$dado->bebida</td>
+                                                <td>$qtdCerveja</td>
+                                                <td>$qtdWhisky</td>
+                                                <td>
+                                                    <button class='btn btn-primary' onclick='Excluir($dado->id);'>
+                                                        <img class='icon-remove' src='img/remove.png'>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            ";
+                                    }
+                                }
+
+                            ?>
                         </tbody>
                     </table>
                 </article>		     
@@ -147,11 +174,6 @@
 		 </div>
       </div>
     </section>
-
-    <!-- Footer -->
-    <footer>
-    	dados pessoais
-    </footer>
 
     <!-- Main JavaScript -->
     <script src="js/main.js"></script>    
